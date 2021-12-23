@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block start %}
+    <section class="start start-no">
+        <div class="container">
+            <header class="d-flex justify-content-between align-items-center">
+                <a href="{% url 'index' %}" class="logo">
+                    <img src="{% static 'img/images-removebg-preview%201.png' %}" alt="">
+                </a>
+                <nav class="menu d-none d-sm-none d-md-block col-md-5">
+                    <ul class="">
+                        <li><a href="{% url 'index' %}">
+                            Home
+                        </a></li>
+                        <li><a href="{% url 'products' %}">
+                            Product
+                        </a></li>
+                        <li><a href="{% url 'about' %}">
+                            About Us
+                        </a></li>
+                        <li><a href="{% url 'contacts' %}">
+                            Contact Us
+                        </a></li>
+                    </ul>
+                </nav>
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'cart' request.user.cart_set.last.pk %}">
+                        <button class="header-btn">
+                            Cart
+                        </button>
+                    </a>
+                    <a href="{% url 'orders' %}">
+                        <button class="header-btn">
+                            Orders
+                        </button>
+                    </a>
+                    <a href="{% url 'logout' %}">
+                        <button class="header-btn">
+                            {{ request.user.username }}, Log Out
+                        </button>
+                    </a>
+                {% else %}
+                    <a href="{% url 'login' %}">
+                        <button class="header-btn">
+                            Sign In
+                        </button>
+                    </a>
+                {% endif %}
+        </header>
+        </div>
+    </section>
+{% endblock %}
+{% block main %}
+    <section class="product">
+        <div class="container">
+            <h3 class="product-title">
+                Our Products
+            </h3>
+            {% if request.user.is_superuser %}
+                <a href="{% url 'create-product' %}">
+                    <button class="product-card__btn" style="margin-left: 40%;margin-bottom: 50px;">Create Product</button>
+                </a>
+            {% endif %}
+            <div class="category">
+                <ul class="d-flex justify-content-around">
+                    {% for category in categories %}
+                        <li><a href="{% url 'products' %}?category={{ category.id }}">
+                            {{ category.title.upper }}
+                        </a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="product-box">
+                {% for product in products %}
+                    <div class="product-card d-flex justify-content-around flex-wrap align-items-center" style="margin-top: 30px;">
+                        <div class="product-left">
+                            <img style="width: 200px;" src="{{ product.image.url }}" alt="">
+                        </div>
+                        <div class="product-right">
+                            <h3 class="product-card__name">{{ product.title }}</h3>
+                            <p class="product-card__text">{{ product.description }}</p>
+                            <h3 class="product-card__price">${{ product.price }}</h3>
+                            <a href="{% url 'add-to-cart' %}?product={{ product.pk }}&from=products,">
+                                <button class="product-card__btn">Add to cart</button>
+                            </a>
+                            {% if request.user.is_superuser %}
+                                <a href="{% url 'delete-product' product.pk %}">
+                                    <button class="product-card__btn">Delete</button>
+                                </a>
+                                <a href="{% url 'product-detail' product.pk %}">
+                                    <button class="product-card__btn" style="margin-top: 10px;">Details</button>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1"><button class="header-btn">&laquo; first</button></a>
+                        <a href="?page={{ page_obj.previous_page_number }}">
+                            <button class="header-btn">previous</button></a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}"><button class="header-btn">next</button></a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}"><button class="header-btn">last &raquo;</button></a>
+                    {% endif %}
+                </span>
+            </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

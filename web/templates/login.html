@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block start %}
+    <section class="start start-no">
+        <div class="container">
+            <header class="d-flex justify-content-between align-items-center">
+                <a href="" class="logo">
+                    <img src="{% static 'img/images-removebg-preview%201.png' %}" alt="">
+                </a>
+                <nav class="menu d-none d-sm-none d-md-block col-md-5">
+                    <ul class="">
+                        <li><a href="{% url 'index' %}">
+                            Home
+                        </a></li>
+                        <li><a href="{% url 'products' %}">
+                            Product
+                        </a></li>
+                        <li><a href="{% url 'about' %}">
+                            About Us
+                        </a></li>
+                        <li><a href="{% url 'contacts' %}">
+                            Contact Us
+                        </a></li>
+                    </ul>
+                </nav>
+                <button class="header-btn">
+                    Buy Now
+                </button>
+            </header>
+        </div>
+    </section>
+{% endblock %}
+{% block main %}
+    <section class="product">
+        <div class="container">
+            <h3 class="product-title">
+                Sign In
+            </h3>
+            <form method="post" class="login-form">
+                {% for error in form.errors.values %}
+                    <h6 class="form-error">{{ error }}</h6>
+                {% endfor %}
+                {% csrf_token %}
+                <input type="text" name="username" placeholder="Username" autocomplete="username" maxlength="150" id="id_username">
+                <input type="password" name="password" placeholder="Password" autocomplete="current-password" id="id_password">
+                <input type="submit" value="Login">
+                <p>Dont have account yet? <a href="{% url 'register' %}">Register</a> yet!</p>
+            </form>
+        </div>
+    </section>
+{% endblock %}

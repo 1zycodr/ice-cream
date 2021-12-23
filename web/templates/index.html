@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block start_content %}
+    <div class="start-content">
+        <div class="start-left col-md-8 col-sm-12 col-12">
+            <h6 class="start-small__title">
+                Sweet fun, full of milk.
+            </h6>
+            <h1 class="start-title">
+                Feel inside cold with our delicious <span>ice-cream.</span>
+            </h1>
+            <p class="start-text">
+                Some food has looked so awful that it's looked like something that the dog's brought home, yet after one mouthful I've been left eating my thoughts, my words.
+            </p>
+            <a href="{% url 'products' %}">
+                <button class="start-btn">
+                    Buy now!
+                </button>
+            </a>
+        </div>
+        <div class="start-right">
+            <img src="{% static 'img/Group 138.png' %}" alt="">
+        </div>
+    </div>
+{% endblock %}
+
+{% block main %}
+    <section class="card">
+        <div class="container d-flex flex-wrap justify-content-around">
+            <div class="card-item">
+                <img src="{% static 'img/car.png' %}" alt="">
+                <h3 class="card-item__title">Free Shipping</h3>
+                <p class="card-item__text">
+                    Last Chance! Free shipping on all orders ends today.
+                </p>
+            </div>
+            <div class="card-item">
+                <img src="{% static 'img/stack.png' %}" alt="">
+                <h3 class="card-item__title">Quick Packaging</h3>
+                <p class="card-item__text">
+                    Last Chance! Free shipping on all orders ends today.
+                </p>
+            </div>
+            <div class="card-item">
+                <img src="{% static 'img/cash.png' %}" alt="">
+                <h3 class="card-item__title">100% Money Back</h3>
+                <p class="card-item__text">
+                    Last Chance! Free shipping on all orders ends today.
+                </p>
+            </div>
+            <div class="card-item">
+                <img src="{% static 'img/graid.png' %}" alt="">
+                <h3 class="card-item__title">Fast Delivery</h3>
+                <p class="card-item__text">
+                    Last Chance! Free shipping on all orders ends today.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="sugar">
+        <div class="container d-flex justify-content-around flex-wrap align-items-center">
+            <div class="sugar-left col-md-4 col-12 col-sm-12">
+                <h3 class="sugar-title">Brown Sugar Oatmea</h3>
+                <p class="sugar-text">Together with McDonald’s, Burger King has grown to become synonymous with burgers in the US.Together with McDonald’s, Burger King has grown to become synonymous.</p>
+                <button class="sugar-btn">See Details</button>
+            </div>
+            <div class="sugar-right col-md-6">
+                <img class="w-100" src="{% static 'img/mar.png' %}" alt="">
+            </div>
+        </div>
+    </section>
+
+    <section class="product">
+        <div class="container">
+            <h3 class="product-title">
+                Our Products
+            </h3>
+            <div class="category">
+                <ul class="d-flex justify-content-around">
+                    {% for category in categories %}
+                        <li><a href="{% url 'products' %}?category={{ category.id }}">
+                            {{ category.title.upper }}
+                        </a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="product-box">
+                {% for product in products %}
+                    <div class="product-card d-flex justify-content-around flex-wrap align-items-center">
+                        <div class="product-left">
+                            <img src="{{ product.image.url }}" alt="">
+                        </div>
+                        <div class="product-right">
+                            <h3 class="product-card__name">{{ product.title }}</h3>
+                            <p class="product-card__text">{{ product.description }}</p>
+                            <h3 class="product-card__price">${{ product.price }}</h3>
+                            <a href="{% url 'products' %}">
+                                <button class="product-card__btn">Buy Now</button>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="map">
+        <div class="container">
+            <iframe src="https://api-maps.yandex.ru/frame/v1/-/CVh7YBYg?" width="100%" height="400" frameborder="0"></iframe>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block start %}
+    <section class="start start-no">
+        <div class="container">
+            <header class="d-flex justify-content-between align-items-center">
+                <a href="{% url 'index' %}" class="logo">
+                    <img src="{% static 'img/images-removebg-preview%201.png' %}" alt="">
+                </a>
+                <nav class="menu d-none d-sm-none d-md-block col-md-5">
+                    <ul class="">
+                        <li><a href="{% url 'index' %}">
+                            Home
+                        </a></li>
+                        <li><a href="{% url 'products' %}">
+                            Product
+                        </a></li>
+                        <li><a href="{% url 'about' %}">
+                            About Us
+                        </a></li>
+                        <li><a href="{% url 'contacts' %}">
+                            Contact Us
+                        </a></li>
+                    </ul>
+                </nav>
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'cart' request.user.cart_set.last.pk %}">
+                        <button class="header-btn">
+                            Cart
+                        </button>
+                    </a>
+                    <a href="{% url 'orders' %}">
+                        <button class="header-btn">
+                            Orders
+                        </button>
+                    </a>
+                    <a href="{% url 'logout' %}">
+                        <button class="header-btn">
+                            {{ request.user.username }}, Log Out
+                        </button>
+                    </a>
+                {% else %}
+                    <a href="{% url 'login' %}">
+                        <button class="header-btn">
+                            Sign In
+                        </button>
+                    </a>
+                {% endif %}
+        </header>
+        </div>
+    </section>
+{% endblock %}
+{% block main %}
+    <section class="product" style="min-height: 615px">
+        <div class="container">
+            <h3 class="product-title">
+                Your orders
+            </h3>
+            <div class="product-box">
+                {% if orders.exists %}
+                    {% for order in orders %}
+                        <div class="product-card d-flex justify-content-around flex-wrap align-items-center" style="margin-top: 30px;">
+                            <div class="product-left">
+                                <a href="{% url 'order-details' order.pk %}">
+                                    <h3 class="product-card__name">Order #{{ order.pk }}</h3>
+                                </a>
+                            </div>
+                            <p class="product-card__price">Status: {{ order.get_status }}</p>
+                            <h3 class="product-card__price">Price: ${{ order.cart.total_price }}</h3>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <h3>You have not orders yet!</h3>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

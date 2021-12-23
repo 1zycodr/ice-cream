@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block start_content %}
+    <div class="start-content">
+        <div class="start-left col-md-8 col-sm-12 col-12">
+            <h6 class="start-small__title">
+                Sweet fun, full of milk.
+            </h6>
+            <h1 class="start-title">
+                Feel inside cold with our delicious <span>ice-cream.</span>
+            </h1>
+            <p class="start-text">
+                Some food has looked so awful that it's looked like something that the dog's brought home, yet after one mouthful I've been left eating my thoughts, my words.
+            </p>
+            <p class="start-title" style="margin-top: -40px">
+                Our contacts:
+            </p>
+            <p class="start-text" style="margin-top: -20px">
+                +7(727) 356-09-71,
+                +7(727) 356-09-72
+            </p>
+        </div>
+        <div class="start-right">
+            <img src="{% static 'img/Group 138.png' %}" alt="">
+        </div>
+        <section class="map" style="margin-bottom: 20px">
+            <div class="container">
+                <iframe src="https://api-maps.yandex.ru/frame/v1/-/CVh7YBYg?" width="100%" height="400" frameborder="0"></iframe>
+            </div>
+        </section>
+    </div>
+{% endblock %}
